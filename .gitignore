@@ -1,8 +1,13 @@
 # Files from Nintendo
 static/
+gifts/
 *.html
 *.js
 *.css
+*.json
+
+# My tokens
+private*.*
 
 # MacOS
 .DS_Store

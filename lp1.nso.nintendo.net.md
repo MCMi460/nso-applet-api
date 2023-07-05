@@ -1,23 +1,28 @@
 ## Testing the NSO Webapplet with dev tools
 
-Some quick documentation on getting the NSO webapplet in your browser (from information discovered by Samuel Elliot):
-```
-https://accounts.nintendo.com/connect/1.0.0/authorize?client_id=f4e5f2f3e022208b&response_type=id_token&scope=openid&redirect_uri=nintendo://lhub.nx.sys&state=a
-```
-Get id_token from the above.
+<details>
+  <summary><b>Show basic tutorial</b></summary
 
-Go to <https://lp1.nso.nintendo.net> -- set your user agent to something like `Mozilla/5.0 (Nintendo Switch; NsoApplet; Nintendo Switch) AppleWebKit/609.4 (KHTML, like Gecko) NF/6.0.2.22.5 NintendoBrowser/5.1.0.23519`
+  Some quick documentation on getting the NSO webapplet in your browser (from information discovered by Samuel Elliot):
+  ```
+  https://accounts.nintendo.com/connect/1.0.0/authorize?client_id=f4e5f2f3e022208b&response_type=id_token&scope=openid&redirect_uri=nintendo://lhub.nx.sys&state=a
+  ```
+  Get id_token from the above.
 
-Add breakpoints to the index's script at `var n = navigator.userAgent.includes("NintendoBrowser");` and the static/js/main.1d72eb58.js at `setNaAuthTokenAvailableCallback: function(e) {e(void 0, void 0, EP.b)},`
+  Go to <https://lp1.nso.nintendo.net> -- set your user agent to something like `Mozilla/5.0 (Nintendo Switch; NsoApplet; Nintendo Switch) AppleWebKit/609.4 (KHTML, like Gecko) NF/6.0.2.22.5 NintendoBrowser/5.1.0.23519`
 
-Reload page and, on first breakpoint, paste the below
-```
-Object.defineProperty(navigator, 'userAgent', {get: () => 'no'})
-```
-Then resume and on second breakpoint, paste the below, replacing "id_token" with your id_token from before
-```
-e(undefined, undefined, 'id_token')
-```
+  Add breakpoints to the index's script at `var n = navigator.userAgent.includes("NintendoBrowser");` and the static/js/main.1d72eb58.js at `setNaAuthTokenAvailableCallback: function(e) {e(void 0, void 0, EP.b)},`
+
+  Reload page and, on first breakpoint, paste the below
+  ```
+  Object.defineProperty(navigator, 'userAgent', {get: () => 'no'})
+  ```
+  Then resume and on second breakpoint, paste the below, replacing "id_token" with your id_token from before
+  ```
+  e(undefined, undefined, 'id_token')
+  ```
+
+</details>
 
 # NSOApplet
 
@@ -28,8 +33,10 @@ For shorthand, please prepend `https://lp1.nso.nintendo.net/api`.
 | Name | Method |
 | --- | --- |
 | [/v1/classic_games/](#getv1lclassicstitles) | **GET** |
+| [/v1/cookies/](#getv1cookies) | **GET** |
 
 ## Standard Headers
+*These tend to be in most of my requests*
 | Key | Value |
 | --- | --- |
 | Accept | `application/json, text/plain, */*` |
@@ -38,7 +45,7 @@ For shorthand, please prepend `https://lp1.nso.nintendo.net/api`.
 | Cache-Control | `no-cache` |
 | Cookie | `CloudFront-Key-Pair-Id=%s; CloudFront-Policy=%s; CloudFront-Signature=%s` |
 | Pragma | `no-cache` |
-| Referer | `https://lp1.nso.nintendo.net/fc-sfc?page_index=1&is_prefetched_token_used=true&session_id=%s` |
+| Referer | `https://lp1.nso.nintendo.net/%s` |
 | Sec-Fetch-Dest | `empty` |
 | Sec-Fetch-Mode | `cors` |
 | Sec-Fetch-Site | `same-origin` |
@@ -105,4 +112,38 @@ Trimmed example response:
         "published_at": "2023-02-09T01:00:00.000Z"
     },
 ]
+```
+
+# getV1Cookies
+## Route
+`/v1/cookies/`
+## Request
+### Headers
+[Standard Request Headers](#standard-headers)
+### Query String Parameters
+*Default values taken from my requests*
+| Key | Value |
+| --- | --- |
+| country | `US` |
+## Response
+The cookies are set in the response headers, and the content returned includes a UNIX timestamp with the expiry date.
+### Headers
+Example headers:
+| Key | Value |
+| --- | --- |
+| Content-Type | `application/json; charset=utf-8` |
+| Date | `Wed, 05 Jul 2023 18:50:03 GMT` |
+| Etag | `W/"%s"` |
+| Referrer-Policy | `strict-origin-when-cross-origin` |
+| Server | `nginx` |
+| Set-Cookie | `CloudFront-Policy=%s; domain=lp1.nso.nintendo.net; path=/; HttpOnly; secure` |
+| Set-Cookie | `CloudFront-Signature=%s; domain=lp1.nso.nintendo.net; path=/; HttpOnly; secure` |
+| Strict-Transport-Security | `max-age=31536000; includeSubDomains` |
+
+### Content
+Example response:
+```json
+{
+  "expires": 1688593803
+}
 ```

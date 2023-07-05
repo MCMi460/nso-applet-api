@@ -134,6 +134,19 @@ def api():
 
     # API works, but I don't have a way to replicate it without manually using dev tools at the moment
     # For the time being, I will be dissecting API calls that I have already made and downloaded
+    print('[WARNING]: testAPI __WILL__ fail if the appropiate files have not been downloaded and placed in the correct places.')
+    # Folder structure:
+    # nso-applet-api/
+    #   gifts/
+    #       assets/
+    #           blobs/
+    #               proxy/
+    #                   */
+    #                       *.webp
+    #   gift_categories.json
+    #
+    ### `gift_categories.json` contains the response body in JSON form from https://lp1.nso.nintendo.net/api/v1/gift_categories
+    ### Anything that does not match up may be liable to script failures
     gifts = []
     with open('gift_categories.json', 'r') as file:
         gift_categories = json.loads(file.read())

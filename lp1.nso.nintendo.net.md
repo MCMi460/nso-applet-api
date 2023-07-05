@@ -36,7 +36,7 @@ For shorthand, please prepend `https://lp1.nso.nintendo.net/api`.
 | Accept-Encoding | `gzip, deflate, br` |
 | Accept-Language | `en-US` |
 | Cache-Control | `no-cache` |
-| Cookie | `CloudFront-Key-Pair-Id=%s; CloudFront-Policy=%s; CloudFront-Signature=E%s` |
+| Cookie | `CloudFront-Key-Pair-Id=%s; CloudFront-Policy=%s; CloudFront-Signature=%s` |
 | Pragma | `no-cache` |
 | Referer | `https://lp1.nso.nintendo.net/fc-sfc?page_index=1&is_prefetched_token_used=true&session_id=%s` |
 | Sec-Fetch-Dest | `empty` |

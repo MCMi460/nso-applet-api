@@ -1,0 +1,12 @@
+# Files from Nintendo
+static/
+*.html
+*.js
+*.css
+
+# MacOS
+.DS_Store
+
+# Python
+venv/
+__pycache__/

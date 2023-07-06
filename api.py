@@ -1,7 +1,5 @@
 # Made by Deltaion Lee (MCMi460) on Github
 import os, httpx, json, requests
-from private import headers # Necessary for API requests
-# See template.private.py for more information regarding the private.py
 
 os.system('')
 class Color:
@@ -11,6 +9,7 @@ class Color:
     YELLOW = '\033[93m'
     BLUE = '\033[94m'
     GREEN = '\033[92m'
+    WHITE = '\033[1;37m'
 
 class API_Exception(Exception):
     def __init__(self, message, data = '') -> None:
@@ -21,8 +20,8 @@ class API_Exception(Exception):
         print(Color.RED + 'Custom traceback:\n' + Color.YELLOW + '\n'.join(map(str, text)) + Color.DEFAULT)
 
 class API:
-    def __init__(self) -> None:
-        X_Api_Token = self.authorize() # Set X_Api_Token
+    def __init__(self, *, headers:dict = None) -> None:
+        X_Api_Token = self.authorize(headers = headers) # Set X_Api_Token
 
         self.host = 'https://lp1.nso.nintendo.net'
         self.Session = httpx.Client(verify = False)
@@ -45,7 +44,9 @@ class API:
         if not self.expiry:
             raise API_Exception(cookies['message'], data = cookies)
 
-    def authorize(self):
+    def authorize(self, *, headers:dict = None) -> str:
+        if not headers:
+            raise API_Exception('missing authorization token generator headers')
         auth = requests.get(
             'https://accounts.nintendo.com/connect/1.0.0/authorize?client_id=f4e5f2f3e022208b&response_type=id_token&scope=openid&redirect_uri=nintendo://lhub.nx.sys&state=a',
             headers = headers,
@@ -57,6 +58,9 @@ class API:
 
         return data[0]
 
+    def _log(self, *text:str) -> None:
+        print(Color.WHITE + ' '.join(map(str, text)) + Color.DEFAULT)
+
     def _formatQueryString(self, route:str, query:dict) -> str:
         return route + '?' + '&'.join( '%s=%s' % (key, query[key]) for key in query.keys() )
 
@@ -64,20 +68,20 @@ class API:
         if query:
             route = self._formatQueryString(route, query)
 
-        print('[GET] ' + route)
+        self._log('[GET]', route)
 
         result = self.Session.get(self.host + route)
-        print('[GET] ' + route + ' <Response Code [%s]>' % result.status_code)
+        self._log('[GET]', route, '<Response Code [%s]>' % result.status_code)
         return result
 
     def post(self, route:str, *, query:dict = {}) -> httpx.Response:
         if query:
             route = self._formatQueryString(route, query)
 
-        print('[POST] ' + route)
+        self._log('[POST]', route)
 
         result = self.Session.post(self.host + route)
-        print('[POST] ' + route + ' <Response Code [%s]>' % result.status_code)
+        self._log('[POST]', route, '<Response Code [%s]>' % result.status_code)
         return result
 
     ### API ROUTES ###
@@ -291,3 +295,8 @@ class API:
                 'country': country,
             }
         ).json()
+
+if __name__ == '__main__':
+    from private import headers # Necessary for API requests
+    # See template.private.py for more information regarding the private.py
+    apiObject:API = API(headers = headers)

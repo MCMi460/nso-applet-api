@@ -3,4 +3,5 @@ import os, httpx, json, requests, typing, inspect
 
 from .util import *
 from .exceptions import *
+from .structures import *
 from .api import *

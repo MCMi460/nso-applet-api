@@ -162,30 +162,15 @@ class NSOAppletAPI:
         Returns
         -------
         list
+            Classic_Game
         a list of dictionaries containing all NSO games available under NSO's emulation softwares
-            dict
-                Keys:
-                    status : str
-                    title_id : str
-                    title_name : str
-                    application_id : str
-                    application_type : str
-                    bundled_region : None || dict
-                        Keys:
-                            region : str
-                            languages : None || list
-                    icon_url : str
-                    publisher : str
-                    is_unknown_release_date : bool
-                    released_at : str
-                    published_at : str
         """
-        return self._get('/api/v1/classic_games',
+        return [ Classic_Game(**iterable) for iterable in self._get('/api/v1/classic_games',
             query = {
                 'statuses[]': statuses,
                 'country': country,
             }
-        ).json()
+        ).json() ]
 
     def getV1GiftCategories(self, country:str) -> list:
         """GET - Gets the current icon rewards available

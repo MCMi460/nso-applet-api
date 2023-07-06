@@ -1,6 +1,47 @@
 # Made by Deltaion Lee (MCMi460) on Github
 from . import *
 
+#######################################
+# NSOAppletAPI.getV1LClassicsTitles() #
+#######################################
+class Classic_Game:
+    """
+    iterable : dict
+        Keys:
+            status : str
+            title_id : str
+            title_name : str
+            application_id : str
+            application_type : str
+            bundled_region : None || dict
+                Keys:
+                    region : str
+                    languages : None || list
+            icon_url : str
+            publisher : str
+            is_unknown_release_date : bool
+            released_at : str
+            published_at : str
+    """
+    def __init__(self, **kwargs) -> None:
+        self.status:str = kwargs.get('status')
+        self.title_id:str = kwargs.get('title_id')
+        self.title_name:str = kwargs.get('title_name')
+        self.application_id:str = kwargs.get('application_id')
+        self.application_type:str = kwargs.get('application_type')
+        self.bundled_region:dict = kwargs.get('bundled_region')
+        self.icon_url:str = kwargs.get('icon_url')
+        self.publisher:str = kwargs.get('publisher')
+        self.is_unknown_release_date:bool = kwargs.get('is_unknown_release_date')
+        self.released_at:str = kwargs.get('released_at')
+        self.published_at:str = kwargs.get('published_at')
+
+    def __str__(self) -> str:
+        return toString(self)
+
+######################################
+# NSOAppletAPI.getV1GiftCategories() #
+######################################
 class Gift_Category:
     """
     iterable : dict

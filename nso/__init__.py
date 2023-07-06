@@ -4,5 +4,3 @@ import os, httpx, json, requests
 from .util import *
 from .exceptions import *
 from .api import *
-
-from .__main__ import *

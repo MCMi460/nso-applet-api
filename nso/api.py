@@ -46,7 +46,7 @@ class NSOAppletAPI:
     def _formatQueryString(self, route:str, query:dict) -> str:
         return route + '?' + '&'.join( '%s=%s' % (key, query[key]) for key in query.keys() )
 
-    def get(self, route:str, *, query:dict = {}) -> httpx.Response:
+    def _get(self, route:str, *, query:dict = {}) -> httpx.Response:
         if query:
             route = self._formatQueryString(route, query)
 
@@ -56,7 +56,7 @@ class NSOAppletAPI:
         self._log('[GET]', route, '<Response Code [%s]>' % result.status_code)
         return result
 
-    def post(self, route:str, *, query:dict = {}) -> httpx.Response:
+    def _post(self, route:str, *, query:dict = {}) -> httpx.Response:
         if query:
             route = self._formatQueryString(route, query)
 
@@ -95,7 +95,7 @@ class NSOAppletAPI:
                 analytics_opted_in : bool
                 is_region_quebec : bool
         """
-        return self.get('/api/v1/user/profile',
+        return self._get('/api/v1/user/profile',
             query = {
                 'country': country,
             }
@@ -116,7 +116,7 @@ class NSOAppletAPI:
             Keys:
                 expires : int
         """
-        return self.get('/api/v1/cookies',
+        return self._get('/api/v1/cookies',
             query = {
                 'country': country,
             }
@@ -143,7 +143,7 @@ class NSOAppletAPI:
                                 platinum : int
                         expirations : list
         """
-        return self.post('/api/v1/login',
+        return self._post('/api/v1/login',
             query = {
                 'country': country,
             }
@@ -180,7 +180,7 @@ class NSOAppletAPI:
                     released_at : str
                     published_at : str
         """
-        return self.get('/api/v1/classic_games',
+        return self._get('/api/v1/classic_games',
             query = {
                 'statuses[]': statuses,
                 'country': country,
@@ -262,7 +262,7 @@ class NSOAppletAPI:
                                             user_id : str
                                             limited : bool
         """
-        return self.get('/api/v1/gift_categories',
+        return self._get('/api/v1/gift_categories',
             query = {
                 'country': country,
             }
@@ -272,7 +272,7 @@ class NSOAppletAPI:
         """
         Unfinished
         """
-        return self.get('/api/v2/pickup_items',
+        return self._get('/api/v2/pickup_items',
             query = {
                 'country': country,
             }

@@ -15,6 +15,8 @@ private*.*
 # Python
 venv/
 __pycache__/
+build/
+*.egg-info/
 
 # Tests
 test*.*

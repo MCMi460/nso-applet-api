@@ -3,7 +3,7 @@ from . import *
 
 class Gift_Category:
     """
-    dict
+    iterable : dict
         Keys:
             id : str
             key : str
@@ -30,7 +30,7 @@ class Gift_Category:
         self.supported_tags:typing.List[str] = kwargs.get('supported_tags')
         self.key_color:str = kwargs.get('key_color')
         self.rating_info:Rating_Info = Rating_Info(**kwargs.get('rating_info'))
-        self.gifts:typing.List[Gift] = [ Gift(**gift) for gift in kwargs.get('gifts') ]
+        self.gifts:typing.List[Gift] = [ Gift(**iterable) for iterable in kwargs.get('gifts') ]
 
     def __str__(self) -> str:
         return toString(self)
@@ -49,7 +49,7 @@ class Rating_Info:
         self.nsuid:int = kwargs.get('nsuid')
         self.rating_system:Rating_System = Rating_System(**kwargs.get('rating_system'))
         self.rating:Rating = Rating(**kwargs.get('rating'))
-        self.content_descriptors:typing.List[Content_Descriptor] = [ Content_Descriptor(**content_descriptor) for content_descriptor in kwargs.get('content_descriptors') ]
+        self.content_descriptors:typing.List[Content_Descriptor] = [ Content_Descriptor(**iterable) for iterable in kwargs.get('content_descriptors') ]
 
     def __str__(self) -> str:
         return toString(self)
@@ -90,7 +90,7 @@ class Rating:
 
 class Content_Descriptor:
     """
-    content_descriptor : dict
+    iterable : dict
         Keys:
             id : int
             name : str
@@ -108,7 +108,7 @@ class Content_Descriptor:
 
 class Gift:
     """
-    gift : dict
+    iterable : dict
         Keys:
             id : str
             name : str
@@ -385,7 +385,7 @@ class NSOAppletAPI:
         list
         a list of Gift_Category objects
         """
-        return [ Gift_Category(**gift_category) for gift_category in self._get('/api/v1/gift_categories',
+        return [ Gift_Category(**iterable) for iterable in self._get('/api/v1/gift_categories',
             query = {
                 'country': country,
             }

@@ -22,9 +22,13 @@
   e(undefined, undefined, 'id_token')
   ```
 
+  If you'd like a bunch of info dump, make a breakpoint anywhere with `r.getState()`, then run `r.getState();` in the Console whenever it breaks there.
+
 </details>
 
 # NSOApplet
+
+## A lot of the below documentation is wrong/bad as of now. See [my script](/api.py) for a new documentation of these endpoints (and more) in Python code.
 
 All requests are over HTTP2.  
 For shorthand, please prepend `https://lp1.nso.nintendo.net/api`.  
@@ -120,6 +124,7 @@ Trimmed example response:
 ## Request
 ### Headers
 [Standard Request Headers](#standard-headers)
+*You don't need the `Cookie` header*
 ### Query String Parameters
 *Default values taken from my requests*
 | Key | Value |

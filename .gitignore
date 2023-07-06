@@ -15,3 +15,8 @@ private*.*
 # Python
 venv/
 __pycache__/
+
+# Tests
+test*.*
+test*/
+t.*

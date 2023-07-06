@@ -29,12 +29,18 @@ class NSOAppletAPI:
     def authorize(self, *, headers:dict = None) -> str:
         if not headers:
             raise NSOAppletAPI_Exception('missing authorization token generator headers')
+        url = 'https://accounts.nintendo.com'
+        route = '/connect/1.0.0/authorize?client_id=f4e5f2f3e022208b&response_type=id_token&scope=openid&redirect_uri=nintendo://lhub.nx.sys&state=a'
+
+        self._log('[GET]', url + route)
+
         auth = requests.get(
-            'https://accounts.nintendo.com/connect/1.0.0/authorize?client_id=f4e5f2f3e022208b&response_type=id_token&scope=openid&redirect_uri=nintendo://lhub.nx.sys&state=a',
+            url + route,
             headers = headers,
             allow_redirects = False
         ) # Simulate logging in. Steal the request headers from an actual request to the same URL.
         # See template.private.py for more information regarding the private.py
+        self._log('[GET]', url + route, '<Response Code [%s]>' % auth.status_code)
 
         data = auth.headers['location'].replace('nintendo://lhub.nx.sys#id_token=', '').split('&')
 

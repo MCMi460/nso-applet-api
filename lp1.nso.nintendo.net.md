@@ -28,7 +28,8 @@
 
 # NSOApplet
 
-## A lot of the below documentation is wrong/bad as of now. See [my script](/api.py) for a new documentation of these endpoints (and more) in Python code.
+## A lot of the below documentation is wrong/bad as of now. See [my script](/nso/api.py) for a new documentation of these endpoints (and more) in Python code.
+## I will be fixing this in the upcoming future. I'm just planning on writing all of the routes in Python first.
 
 All requests are over HTTP2.  
 For shorthand, please prepend `https://lp1.nso.nintendo.net/api`.  

@@ -1,25 +1,7 @@
 # Made by Deltaion Lee (MCMi460) on Github
-import os, httpx, json, requests
+from . import *
 
-os.system('')
-class Color:
-    DEFAULT = '\033[0m'
-    RED = '\033[91m'
-    PURPLE = '\033[0;35m'
-    YELLOW = '\033[93m'
-    BLUE = '\033[94m'
-    GREEN = '\033[92m'
-    WHITE = '\033[1;37m'
-
-class API_Exception(Exception):
-    def __init__(self, message, data = '') -> None:
-        self.log(data, 'API_Exception: ' + message)
-        super().__init__(message)
-
-    def log(self, *text:str) -> None:
-        print(Color.RED + 'Custom traceback:\n' + Color.YELLOW + '\n'.join(map(str, text)) + Color.DEFAULT)
-
-class API:
+class NSOAppletAPI:
     def __init__(self, *, headers:dict = None) -> None:
         X_Api_Token = self.authorize(headers = headers) # Set X_Api_Token
 
@@ -42,11 +24,11 @@ class API:
         cookies = self.getV1Cookies('US') # Set cookies for the future
         self.expiry = cookies.get('expires', None)
         if not self.expiry:
-            raise API_Exception(cookies['message'], data = cookies)
+            raise NSOAppletAPI_Exception(cookies['message'], data = cookies)
 
     def authorize(self, *, headers:dict = None) -> str:
         if not headers:
-            raise API_Exception('missing authorization token generator headers')
+            raise NSOAppletAPI_Exception('missing authorization token generator headers')
         auth = requests.get(
             'https://accounts.nintendo.com/connect/1.0.0/authorize?client_id=f4e5f2f3e022208b&response_type=id_token&scope=openid&redirect_uri=nintendo://lhub.nx.sys&state=a',
             headers = headers,
@@ -295,8 +277,3 @@ class API:
                 'country': country,
             }
         ).json()
-
-if __name__ == '__main__':
-    from private import headers # Necessary for API requests
-    # See template.private.py for more information regarding the private.py
-    apiObject:API = API(headers = headers)

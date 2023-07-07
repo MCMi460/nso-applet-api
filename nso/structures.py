@@ -53,10 +53,7 @@ class Classic_Game:
             title_name : str
             application_id : str
             application_type : str
-            bundled_region : None || dict
-                Keys:
-                    region : str
-                    languages : None || list
+            bundled_region : None || Bundled_Region
             icon_url : str
             publisher : str
             is_unknown_release_date : bool
@@ -69,7 +66,7 @@ class Classic_Game:
         self.title_name:str = kwargs.get('title_name')
         self.application_id:str = kwargs.get('application_id')
         self.application_type:str = kwargs.get('application_type')
-        self.bundled_region:dict = kwargs.get('bundled_region')
+        self.bundled_region:Bundled_Region = Bundled_Region(**kwargs.get('bundled_region')) if kwargs.get('bundled_region') else None
         self.icon_url:str = kwargs.get('icon_url')
         self.publisher:str = kwargs.get('publisher')
         self.is_unknown_release_date:bool = kwargs.get('is_unknown_release_date')
@@ -78,6 +75,17 @@ class Classic_Game:
 
     def __str__(self) -> str:
         return toString(self)
+
+class Bundled_Region:
+    """
+    bundled_region : dict
+        Keys:
+            region : str
+            languages : None || list
+    """
+    def __init__(self, **kwargs) -> None:
+        self.region:str = kwargs.get('region')
+        self.languages:list = kwargs.get('languages')
 
 ######################################
 # NSOAppletAPI.getV1GiftCategories() #

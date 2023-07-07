@@ -26,12 +26,20 @@ They are returned in the `Set-Cookie` header of the response. `NSOAppletAPI.getV
 | [Cookie](#cookie) | an object that contains the expiry information |
 
 ## getV1LClassicsTitles
+Gets the current titles available under NSO's emulation softwares.
 
 ### Request
 
+| Parameter | Type | Description |
+| --- | --- | --- |
+| statuses | str | correlates to statuses[] - commonly is `published` |
+| country | str | the account's country code |
 
 ### Response
 
+| Type | Description |
+| --- | --- |
+| list<[Classic_Game](#classic_game)> | a list of objects containing all NSO games available under NSO's emulation softwares |
 
 ## getV1GiftCategories
 
@@ -45,6 +53,8 @@ They are returned in the `Set-Cookie` header of the response. `NSOAppletAPI.getV
 | Name | Origin |
 | --- | --- |
 | [Cookie](#cookie) | [nso](/nso/structures.py) |
+| [Classic_Game](#classic_game) | [nso](/nso/structures.py) |
+| [Bundled_Region](#bundled_region) | [nso](/nso/structures.py) |
 
 ## Cookie
 
@@ -53,6 +63,31 @@ An object with the following:
 | Name | Type | Description |
 | --- | --- | --- |
 | expires | int | UNIX timestamp with cookie expiry date |
+
+## Classic_Game
+
+An object with the following:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| status | str | Seems to always be `publishing` |
+| title_id | str | Title IDs for respective console |
+| title_name | str | Name of the game |
+| application_id | str | Matches an NSO console emulator title ID |
+| application_type | str | Console type description |
+| bundled_region | [Bundled_Region](#bundled_region) | Includes special region information. Commonly, this is `None` |
+| icon_url | str | Game's icon URL |
+| publisher | str | Game's publisher |
+| is_unknown_release_date | bool | Whether the release date is known or not |
+| released_at | str | When game was initially released |
+| published_at | str | When game was added to NSO |
+
+## Bundled_Region
+
+| Name | Type | Description |
+| --- | --- | --- |
+| region | str | Region code (i.e. `EUR`, `KR`, etc) |
+| languages | list | List of language codes. Can be `None` |
 
 # Testing the NSO Webapplet with dev tools
 

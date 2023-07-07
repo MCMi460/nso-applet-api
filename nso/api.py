@@ -160,7 +160,7 @@ class NSOAppletAPI:
         Parameters
         ----------
         statuses : str
-        correlates to statuses[] - defaults to 'published'
+        correlates to statuses[] - commonly is 'published'
         country : str
         the account's country code
 
@@ -168,7 +168,7 @@ class NSOAppletAPI:
         -------
         list
             Classic_Game
-        a list of dictionaries containing all NSO games available under NSO's emulation softwares
+        a list of objects containing all NSO games available under NSO's emulation softwares
         """
         return [ Classic_Game(**iterable) for iterable in self._get('/api/v1/classic_games',
             query = {

@@ -200,7 +200,7 @@ class Gift:
     iterable : dict
         Keys:
             id : str
-            name : str
+            name : None || str
             tags : list
                 str
                 # 'character'/'background'/'frame'

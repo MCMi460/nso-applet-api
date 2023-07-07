@@ -1,5 +1,5 @@
 # Made by Deltaion Lee (MCMi460) on Github
-import os, httpx, json, requests, typing, inspect
+import os, httpx, json, requests, typing, inspect, urllib.parse
 
 from .util import *
 from .exceptions import *

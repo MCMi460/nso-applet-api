@@ -78,9 +78,9 @@ class NSOAppletAPI:
         # See template.private.py for more information regarding the private.py
         self._log('[GET]', url + route, '<Response Code [%s]>' % auth.status_code)
 
-        data = auth.headers['location'].replace('nintendo://lhub.nx.sys#id_token=', '').split('&')
+        data = urllib.parse.parse_qs(urllib.parse.urldefrag(auth.headers['location']).fragment)
 
-        return data[0]
+        return data['id_token'][0]
 
     ### API ROUTES ###
     ## Disclaimer:

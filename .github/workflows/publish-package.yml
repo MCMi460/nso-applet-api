@@ -1,6 +1,8 @@
-name: Publish package to TEST_PyPI
+name: Publish package to TEST_PyPI and PyPI
 
-on: push
+on:
+  release:
+    types: [published]
 
 jobs:
   build-and-publish:

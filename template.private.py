@@ -11,11 +11,21 @@ headers:dict = {
 }
 
 ## 'Cookie' may include the following cookies:
-# NATID
-# NALART
-# bm_sz
-# NAOPBS
-# NASID
-# NLAA
-# _abck
-## ...and possibly more? That's all that I had.
+# NASID -- a JWT formatted like the below:
+# Header:
+# {
+#  "alg": "HS256"
+# }
+#
+# Payload:
+# {
+#  "iss": "https://accounts.nintendo.com", -- the issuer
+#  "jti": integer, -- the token identifier
+#  "_ext": {
+#    "u": integer
+#  },
+#  "exp": integer, -- UNIX timestamp for expiry -- 730 days after issue date
+#  "iat": integer, -- UNIX timestamp for issuing date
+#  "sub": "string", -- this is your Nintendo Account ID
+#  "typ": "session" -- this is the type of the token
+# }

@@ -204,11 +204,11 @@ class Gift:
             tags : list
                 str
                 # 'character'/'background'/'frame'
-            meta : None || dict
+            meta : None || str
             # This one is really variable
             # Animal Crossing characters seem to have birthdays
-                Keys:
-                    birthday : str
+            # And the string is just stringified JSON
+            # Such as "meta": "{\"birthday\":\"07-02\"}"
             created_at : str
             updated_at : str
             reward : Reward
@@ -217,7 +217,7 @@ class Gift:
         self.id:str = kwargs.get('id')
         self.name:str = kwargs.get('name')
         self.tags:typing.List[str] = kwargs.get('tags')
-        self.meta:dict = kwargs.get('meta')
+        self.meta:str = kwargs.get('meta')
         self.created_at:str = kwargs.get('created_at')
         self.updated_at:str = kwargs.get('updated_at')
         self.reward:Reward = Reward(**kwargs.get('reward'))

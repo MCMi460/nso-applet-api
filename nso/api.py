@@ -2,7 +2,7 @@
 from . import *
 
 class NSOAppletAPI:
-    def __init__(self, *, headers:dict = None) -> None:
+    def __init__(self, *, headers:dict = None, country:str = 'US') -> None:
         X_Api_Token = self.authorize(headers = headers) # Set X_Api_Token
 
         self.host = 'https://lp1.nso.nintendo.net'
@@ -21,7 +21,7 @@ class NSOAppletAPI:
             'X-Api-Token': X_Api_Token,
         })
 
-        cookies = self.getV1Cookies('US') # Set cookies for the future
+        cookies = self.getV1Cookies(country) # Set cookies for the future
         self.expiry = cookies.expires
 
     def __enter__(self):

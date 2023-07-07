@@ -1,6 +1,46 @@
 # Made by Deltaion Lee (MCMi460) on Github
 from . import *
 
+##############################
+# NSOAppletAPI.getUserInfo() #
+##############################
+class User_Info:
+    """
+    response : dict
+        Keys:
+            id : str
+            country : str
+            birthday : str
+            banned : bool
+            analytics_opted_in : bool
+            is_region_quebec : bool
+    """
+    def __init__(self, **kwargs) -> None:
+        self.id:str = kwargs.get('id')
+        self.country:str = kwargs.get('country')
+        self.birthday:str = kwargs.get('birthday')
+        self.banned:bool = kwargs.get('banned')
+        self.analytics_opted_in:bool = kwargs.get('analytics_opted_in')
+        self.is_region_quebec:bool = kwargs.get('is_region_quebec')
+
+    def __str__(self) -> str:
+        return toString(self)
+
+###############################
+# NSOAppletAPI.getV1Cookies() #
+###############################
+class Cookie:
+    """
+    response : dict
+        Keys:
+            expires : int
+    """
+    def __init__(self, **kwargs) -> None:
+        self.expires:int = kwargs.get('expires')
+
+    def __str__(self) -> str:
+        return toString(self)
+
 #######################################
 # NSOAppletAPI.getV1LClassicsTitles() #
 #######################################

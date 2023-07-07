@@ -91,52 +91,43 @@ class NSOAppletAPI:
     ## Note:
     ## I will also note beside endpoints that require an NSO membership
     ## in order to operate.
-    def getUserInfo(self, country:str) -> dict:
+    def getUserInfo(self, country:str) -> User_Info:
         """GET - Gets the user's info
 
         Parameters
         ----------
         country : str
-        The account's country code
+        the account's country code
 
         Returns
         -------
-        dict
-        a dictionary of the user's info
-            Keys:
-                id : str
-                country : str
-                birthday : str
-                banned : bool
-                analytics_opted_in : bool
-                is_region_quebec : bool
+        User_Info
+        an object with the user's info
         """
-        return self._get('/api/v1/user/profile',
+        return User_Info(**self._get('/api/v1/user/profile',
             query = {
                 'country': country,
             }
-        ).json()
+        ).json())
 
-    def getV1Cookies(self, country:str) -> dict:
+    def getV1Cookies(self, country:str) -> Cookie:
         """GET - Stores the following cookies: CloudFront-Key-Pair-Id, CloudFront-Policy, CloudFront-Signature
 
         Parameters
         ----------
         country : str
-        The account's country code
+        the account's country code
 
         Returns
         -------
-        dict
-        a dictionary that contains the expiry information
-            Keys:
-                expires : int
+        Cookie
+        an object that contains the expiry information
         """
-        return self._get('/api/v1/cookies',
+        return Cookie(**self._get('/api/v1/cookies',
             query = {
                 'country': country,
             }
-        ).json()
+        ).json())
 
     def v1PostLogin(self, country:str) -> dict:
         """POST - Posts a login
@@ -144,7 +135,7 @@ class NSOAppletAPI:
         Parameters
         ----------
         country : str
-        The account's country code
+        the account's country code
 
         Returns
         -------
@@ -165,15 +156,15 @@ class NSOAppletAPI:
             }
         ).json()
 
-    def getV1LClassicsTitles(self, statuses:str, country:str) -> dict:
+    def getV1LClassicsTitles(self, statuses:str, country:str) -> list:
         """GET - Gets the current titles available under NSO's emulation softwares
 
         Parameters
         ----------
         statuses : str
-        Correlates to statuses[] - defaults to 'published'
+        correlates to statuses[] - defaults to 'published'
         country : str
-        The account's country code
+        the account's country code
 
         Returns
         -------
@@ -193,10 +184,8 @@ class NSOAppletAPI:
 
         Parameters
         ----------
-        statuses : str
-        Correlates to statuses[] - defaults to 'published'
         country : str
-        The account's country code
+        the account's country code
 
         Returns
         -------

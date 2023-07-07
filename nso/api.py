@@ -22,15 +22,13 @@ class NSOAppletAPI:
         })
 
         cookies = self.getV1Cookies('US') # Set cookies for the future
-        self.expiry = cookies.get('expires', None)
-        if not self.expiry:
-            raise NSOAppletAPI_Exception(cookies['message'], data = cookies)
+        self.expiry = cookies.expires
 
     def __enter__(self):
         return self
 
     def __exit__(self, type, value, traceback):
-        pass
+        self.Session.close()
 
     def _log(self, *text:str) -> None:
         print(Color.WHITE + ' '.join(map(str, text)) + Color.DEFAULT)

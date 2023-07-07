@@ -26,6 +26,42 @@ class NSOAppletAPI:
         if not self.expiry:
             raise NSOAppletAPI_Exception(cookies['message'], data = cookies)
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, traceback):
+        pass
+
+    def _log(self, *text:str) -> None:
+        print(Color.WHITE + ' '.join(map(str, text)) + Color.DEFAULT)
+
+    def _formatQueryString(self, route:str, query:dict) -> str:
+        return route + '?' + '&'.join( '%s=%s' % (key, query[key]) for key in query.keys() )
+
+    def _get(self, route:str, *, query:dict = {}) -> httpx.Response:
+        route = route.replace(self.host, '')
+        if query:
+            route = self._formatQueryString(route, query)
+
+        self._log('[GET]', route)
+
+        result = self.Session.get(self.host + route)
+        self._log('[GET]', route, '<Response Code [%s]>' % result.status_code)
+        return result
+
+    def _post(self, route:str, *, query:dict = {}) -> httpx.Response:
+        route = route.replace(self.host, '')
+        if query:
+            route = self._formatQueryString(route, query)
+
+        self._log('[POST]', route)
+
+        result = self.Session.post(self.host + route)
+        self._log('[POST]', route, '<Response Code [%s]>' % result.status_code)
+        return result
+
+    ### AUTHORIZATION ROUTE ###
+
     def authorize(self, *, headers:dict = None) -> str:
         if not headers:
             raise NSOAppletAPI_Exception('missing authorization token generator headers')
@@ -45,32 +81,6 @@ class NSOAppletAPI:
         data = auth.headers['location'].replace('nintendo://lhub.nx.sys#id_token=', '').split('&')
 
         return data[0]
-
-    def _log(self, *text:str) -> None:
-        print(Color.WHITE + ' '.join(map(str, text)) + Color.DEFAULT)
-
-    def _formatQueryString(self, route:str, query:dict) -> str:
-        return route + '?' + '&'.join( '%s=%s' % (key, query[key]) for key in query.keys() )
-
-    def _get(self, route:str, *, query:dict = {}) -> httpx.Response:
-        if query:
-            route = self._formatQueryString(route, query)
-
-        self._log('[GET]', route)
-
-        result = self.Session.get(self.host + route)
-        self._log('[GET]', route, '<Response Code [%s]>' % result.status_code)
-        return result
-
-    def _post(self, route:str, *, query:dict = {}) -> httpx.Response:
-        if query:
-            route = self._formatQueryString(route, query)
-
-        self._log('[POST]', route)
-
-        result = self.Session.post(self.host + route)
-        self._log('[POST]', route, '<Response Code [%s]>' % result.status_code)
-        return result
 
     ### API ROUTES ###
     ## Disclaimer:

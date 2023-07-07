@@ -25,13 +25,15 @@ class NSOAppletAPI:
         self.expiry = cookies.expires
 
     def __enter__(self):
+        self._log('[OK]', 'Initialized self', color = Color.GREEN)
         return self
 
     def __exit__(self, type, value, traceback):
         self.Session.close()
+        self._log('[OK]', 'Closed Session', color = Color.GREEN)
 
-    def _log(self, *text:str) -> None:
-        print(Color.WHITE + ' '.join(map(str, text)) + Color.DEFAULT)
+    def _log(self, *text:str, color:str = Color.WHITE) -> None:
+        print(color + ' '.join(map(str, text)) + Color.DEFAULT)
 
     def _formatQueryString(self, route:str, query:dict) -> str:
         return route + '?' + '&'.join( '%s=%s' % (key, query[key]) for key in query.keys() )

@@ -139,22 +139,14 @@ class NSOAppletAPI:
 
         Returns
         -------
-        dict
-        a dictionary that contains information regarding the user's My Nintendo point balance
-            Keys:
-                received_points : list
-                point_wallet : dict
-                    Keys:
-                        total_point : dict
-                            Keys:
-                                platinum : int
-                        expirations : list
+        Login
+        an object that contains information regarding the user's My Nintendo point balance
         """
-        return self._post('/api/v1/login',
+        return Login(**self._post('/api/v1/login',
             query = {
                 'country': country,
             }
-        ).json()
+        ).json())
 
     def getV1LClassicsTitles(self, statuses:str, country:str) -> list:
         """GET - Gets the current titles available under NSO's emulation softwares

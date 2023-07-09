@@ -5,9 +5,26 @@ All requests are made with HTTP2.
 
 | Name | Implements | Method |
 | --- | --- | --- |
+| [NSOAppletAPI.getUserInfo()](#getuserinfo) | [/api/v1/user/profile](https://lp1.nso.nintendo.net/api/v1/user/profile) | **GET** |
 | [NSOAppletAPI.getV1Cookies()](#getv1cookies) | [/api/v1/cookies](https://lp1.nso.nintendo.net/api/v1/cookies) | **GET** |
+| [NSOAppletAPI.v1PostLogin()](#v1postlogin) | [/api/v1/login](https://lp1.nso.nintendo.net/api/v1/login) | **POST** |
 | [NSOAppletAPI.getV1LClassicsTitles()](#getv1lclassicstitles) | [/api/v1/classic_games](https://lp1.nso.nintendo.net/api/v1/classic_games) | **GET** |
 | [NSOAppletAPI.getV1GiftCategories()](#getv1giftcategories) | [/api/v1/gift_categories](https://lp1.nso.nintendo.net/api/v1/gift_categories) | **GET** |
+
+## getUserInfo
+Grabs your account's basic user information. Not a full response of data; just what appears to be necessary for the NSO Applet's purposes.
+
+### Request
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| country | str | the account's country code |
+
+### Response
+
+| Type | Description |
+| --- | --- |
+| [User_Info](#user_info) | an object with your returned user information |
 
 ## getV1Cookies
 Stores the following cookies: `CloudFront-Key-Pair-Id`, `CloudFront-Policy`, `CloudFront-Signature`.  
@@ -24,6 +41,21 @@ They are returned in the `Set-Cookie` header of the response. `NSOAppletAPI.getV
 | Type | Description |
 | --- | --- |
 | [Cookie](#cookie) | an object that contains the expiry information |
+
+## v1PostLogin
+Posts a login and receives a [Login](#login) object with point-related data.
+
+### Request
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| country | str | the account's country code |
+
+### Response
+
+| Type | Description |
+| --- | --- |
+| [Login](#login) | an object that contains your [Point_Wallet](#point_wallet) |
 
 ## getV1LClassicsTitles
 Gets the current titles available under NSO's emulation softwares.
@@ -45,6 +77,9 @@ Gets the current titles available under NSO's emulation softwares.
 
 ### Request
 
+| Parameter | Type | Description |
+| --- | --- | --- |
+| country | str | the account's country code |
 
 ### Response
 
@@ -52,9 +87,28 @@ Gets the current titles available under NSO's emulation softwares.
 
 | Name | Origin |
 | --- | --- |
+| [User_Info](#user_info) | [nso](/nso/structures.py) |
 | [Cookie](#cookie) | [nso](/nso/structures.py) |
+| [Login](#login) | [nso](/nso/structures.py) |
+| [Point_Wallet](#point_wallet) | [nso](/nso/structures.py) |
+| [Total_Point](#total_point) | [nso](/nso/structures.py) |
+| [Expiration](#expiration) | [nso](/nso/structures.py) |
+| [Point](#point) | [nso](/nso/structures.py) |
 | [Classic_Game](#classic_game) | [nso](/nso/structures.py) |
 | [Bundled_Region](#bundled_region) | [nso](/nso/structures.py) |
+
+## User_Info
+
+An object with the following:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | str | Your Nintendo Account ID |
+| country | str | Your account's country code |
+| birthday | str | Your account's birthday |
+| banned | bool | Whether your account is banned or not |
+| analytics_opted_in | bool | If you're opted in to submitting analytical data |
+| is_region_quebec | bool | Whether your account is from Quebec -- required because of specific laws regarding rewards systems, I believe |
 
 ## Cookie
 
@@ -63,6 +117,49 @@ An object with the following:
 | Name | Type | Description |
 | --- | --- | --- |
 | expires | int | UNIX timestamp with cookie expiry date |
+
+## Login
+
+An object with the following:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| received_points | list | A list with your received points -- I've only ever seen this empty |
+| point_wallet | [Point_Wallet](#point_wallet) | A list of your current points, as well as expirations |
+
+## Point_Wallet
+
+An object with the following:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| total_point | [Total_Point](#total_point) | This object includes your total amount of platinum points |
+| expirations | list<[Expiration](#expiration)> | Your points alongside their expiration dates |
+
+## Total_Point
+
+An object with the following:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| platinum | int | Your total number of platinum points |
+
+## Expiration
+
+An object with the following:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| expires_at | str | A date of when the points will expire |
+| point | [Point](#point) | The points that will expire |
+
+## Point
+
+An object with the following:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| platinum | int | Total number of platinum points for a context |
 
 ## Classic_Game
 

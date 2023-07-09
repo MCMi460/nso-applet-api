@@ -41,6 +41,77 @@ class Cookie:
     def __str__(self) -> str:
         return toString(self)
 
+##############################
+# NSOAppletAPI.v1PostLogin() #
+##############################
+class Login:
+    """
+    response : dict
+        Keys:
+            received_points : list
+            # I've only ever seen this empty
+            point_wallet : Point_Wallet
+    """
+    def __init__(self, **kwargs) -> None:
+        self.received_points:list = kwargs.get('received_points')
+        self.point_wallet:Point_Wallet = Point_Wallet(**kwargs.get('point_wallet'))
+
+    def __str__(self) -> str:
+        return toString(self)
+
+class Point_Wallet:
+    """
+    point_wallet : dict
+        Keys:
+            total_point : Total_Point
+            expirations : list
+                Expiration
+    """
+    def __init__(self, **kwargs) -> None:
+        self.total_point:Total_Point = Total_Point(**kwargs.get('total_point'))
+        self.expirations:typing.List[Expiration] = [ Expiration(**iterable) for iterable in kwargs.get('expirations') ]
+
+    def __str__(self) -> str:
+        return toString(self)
+
+class Total_Point:
+    """
+    total_point : dict
+        Keys:
+            platinum : int
+    """
+    def __init__(self, **kwargs) -> None:
+        self.platinum:int = kwargs.get('platinum')
+
+    def __str__(self) -> str:
+        return toString(self)
+
+class Expiration:
+    """
+    iterable : dict
+        Keys:
+            expires_at : str
+            point : Point
+    """
+    def __init__(self, **kwargs) -> None:
+        self.expires_at:str = kwargs.get('expires_at')
+        self.point:Point = Point(**kwargs.get('point'))
+
+    def __str__(self) -> str:
+        return toString(self)
+
+class Point:
+    """
+    point : dict
+        Keys:
+            platinum : int
+    """
+    def __init__(self, **kwargs) -> None:
+        self.platinum:int = kwargs.get('platinum')
+
+    def __str__(self) -> str:
+        return toString(self)
+
 #######################################
 # NSOAppletAPI.getV1LClassicsTitles() #
 #######################################
@@ -243,18 +314,6 @@ class Reward:
         self.begins_at:str = kwargs.get('begins_at')
         self.ends_at:str = kwargs.get('ends_at')
         self.reward_status:Reward_Status = Reward_Status(**kwargs.get('reward_status'))
-
-    def __str__(self) -> str:
-        return toString(self)
-
-class Point:
-    """
-    point : dict
-        Keys:
-            platinum : int
-    """
-    def __init__(self, **kwargs) -> None:
-        self.platinum:int = kwargs.get('platinum')
 
     def __str__(self) -> str:
         return toString(self)

@@ -15,7 +15,7 @@ class User_Info:
             analytics_opted_in : bool
             is_region_quebec : bool
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.id:str = kwargs.get('id')
         self.country:str = kwargs.get('country')
         self.birthday:str = kwargs.get('birthday')
@@ -35,7 +35,7 @@ class Cookie:
         Keys:
             expires : int
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.expires:int = kwargs.get('expires')
 
     def __str__(self) -> str:
@@ -52,7 +52,7 @@ class Login:
             # I've only ever seen this empty
             point_wallet : Point_Wallet
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.received_points:list = kwargs.get('received_points')
         self.point_wallet:Point_Wallet = Point_Wallet(**kwargs.get('point_wallet'))
 
@@ -67,7 +67,7 @@ class Point_Wallet:
             expirations : list
                 Expiration
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.total_point:Total_Point = Total_Point(**kwargs.get('total_point'))
         self.expirations:typing.List[Expiration] = [ Expiration(**iterable) for iterable in kwargs.get('expirations') ]
 
@@ -80,7 +80,7 @@ class Total_Point:
         Keys:
             platinum : int
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.platinum:int = kwargs.get('platinum')
 
     def __str__(self) -> str:
@@ -93,7 +93,7 @@ class Expiration:
             expires_at : str
             point : Point
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.expires_at:str = kwargs.get('expires_at')
         self.point:Point = Point(**kwargs.get('point'))
 
@@ -106,7 +106,7 @@ class Point:
         Keys:
             platinum : int
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.platinum:int = kwargs.get('platinum')
 
     def __str__(self) -> str:
@@ -131,7 +131,7 @@ class Classic_Game:
             released_at : str
             published_at : str
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.status:str = kwargs.get('status')
         self.title_id:str = kwargs.get('title_id')
         self.title_name:str = kwargs.get('title_name')
@@ -154,7 +154,7 @@ class Bundled_Region:
             region : str
             languages : None || list
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.region:str = kwargs.get('region')
         self.languages:list = kwargs.get('languages')
 
@@ -180,7 +180,7 @@ class Gift_Category:
             gifts : list
                 Gift
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.id:str = kwargs.get('id')
         self.key:str = kwargs.get('key')
         self.name:str = kwargs.get('name')
@@ -205,7 +205,7 @@ class Rating_Info:
             content_descriptors : list
                 Content_Descriptor
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.nsuid:int = kwargs.get('nsuid')
         self.rating_system:Rating_System = Rating_System(**kwargs.get('rating_system'))
         self.rating:Rating = Rating(**kwargs.get('rating'))
@@ -221,7 +221,7 @@ class Rating_System:
             id : int
             name : str
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.id:int = kwargs.get('id')
         self.name:str = kwargs.get('name')
 
@@ -238,7 +238,7 @@ class Rating:
             provisional : bool
             image_url : str
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.id:int = kwargs.get('id')
         self.name:str = kwargs.get('name')
         self.age:int = kwargs.get('age')
@@ -257,7 +257,7 @@ class Content_Descriptor:
             type : str
             image_url : None || str
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.id:int = kwargs.get('id')
         self.name:str = kwargs.get('name')
         self.type:str = kwargs.get('type')
@@ -284,7 +284,7 @@ class Gift:
             updated_at : str
             reward : Reward
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.id:str = kwargs.get('id')
         self.name:str = kwargs.get('name')
         self.tags:typing.List[str] = kwargs.get('tags')
@@ -307,7 +307,7 @@ class Reward:
             ends_at : str
             reward_status : Reward_Status
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.id:str = kwargs.get('id')
         self.thumbnail_url:str = kwargs.get('thumbnail_url')
         self.point:Point = Point(**kwargs.get('point'))
@@ -325,7 +325,7 @@ class Reward_Status:
             user_id : str
             limited : bool
     """
-    def __init__(self, **kwargs) -> None:
+    def __init__(self, **kwargs:dict) -> None:
         self.user_id:str = kwargs.get('user_id')
         self.limited:bool = kwargs.get('limited')
 

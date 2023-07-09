@@ -13,5 +13,5 @@ if __name__ == '__main__':
         except ImportError:
             pass
         while True:
-            endpoint = input('>>> ' + Color.WHITE)
+            endpoint:str = input('>>> ' + Color.WHITE)
             exec(endpoint, globals(), locals())

@@ -11,7 +11,7 @@ class Color:
     GREEN = '\033[92m'
     WHITE = '\033[1;37m'
 
-def toString(self, indent = 0) -> str:
+def toString(self, indent:int = 0) -> str:
     ret = []
     for key in dir(self):
         if not callable(getattr(self, key)) and not key.startswith('__'):

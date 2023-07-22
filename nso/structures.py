@@ -54,7 +54,7 @@ class Login:
     """
     def __init__(self, **kwargs:dict) -> None:
         self.received_points:list = kwargs.get('received_points')
-        self.point_wallet:Point_Wallet = Point_Wallet(**kwargs.get('point_wallet', {}))
+        self.point_wallet:Point_Wallet = Point_Wallet() if kwargs.get('point_wallet', {}) is None else Point_Wallet(**kwargs.get('point_wallet', {}))
 
     def __str__(self) -> str:
         return toString(self)
@@ -68,7 +68,7 @@ class Point_Wallet:
                 Expiration
     """
     def __init__(self, **kwargs:dict) -> None:
-        self.total_point:Total_Point = Total_Point(**kwargs.get('total_point', {}))
+        self.total_point:Total_Point = Total_Point() if kwargs.get('total_point', {}) is None else Total_Point(**kwargs.get('total_point', {}))
         self.expirations:typing.List[Expiration] = [ Expiration(**iterable) for iterable in kwargs.get('expirations', []) ]
 
     def __str__(self) -> str:
@@ -95,7 +95,7 @@ class Expiration:
     """
     def __init__(self, **kwargs:dict) -> None:
         self.expires_at:str = kwargs.get('expires_at')
-        self.point:Point = Point(**kwargs.get('point', {}))
+        self.point:Point = Point() if kwargs.get('point', {}) is None else Point(**kwargs.get('point', {}))
 
     def __str__(self) -> str:
         return toString(self)
@@ -189,7 +189,7 @@ class Gift_Category:
         self.required_membership_type:str = kwargs.get('required_membership_type')
         self.supported_tags:typing.List[str] = kwargs.get('supported_tags')
         self.key_color:str = kwargs.get('key_color')
-        self.rating_info:Rating_Info = Rating_Info(**kwargs.get('rating_info', {}))
+        self.rating_info:Rating_Info = Rating_Info() if kwargs.get('rating_info', {}) is None else Rating_Info(**kwargs.get('rating_info', {}))
         self.gifts:typing.List[Gift] = [ Gift(**iterable) for iterable in kwargs.get('gifts', []) ]
 
     def __str__(self) -> str:
@@ -207,8 +207,8 @@ class Rating_Info:
     """
     def __init__(self, **kwargs:dict) -> None:
         self.nsuid:int = kwargs.get('nsuid')
-        self.rating_system:Rating_System = Rating_System(**kwargs.get('rating_system', {}))
-        self.rating:Rating = Rating(**kwargs.get('rating', {}))
+        self.rating_system:Rating_System = Rating_System() if kwargs.get('rating_system', {}) is None else Rating_System(**kwargs.get('rating_system', {}))
+        self.rating:Rating = Rating() if kwargs.get('rating', {}) is None else Rating(**kwargs.get('rating', {}))
         self.content_descriptors:typing.List[Content_Descriptor] = [ Content_Descriptor(**iterable) for iterable in kwargs.get('content_descriptors', []) ]
 
     def __str__(self) -> str:
@@ -291,7 +291,7 @@ class Gift:
         self.meta:str = kwargs.get('meta')
         self.created_at:str = kwargs.get('created_at')
         self.updated_at:str = kwargs.get('updated_at')
-        self.reward:Reward = Reward(**kwargs.get('reward', {}))
+        self.reward:Reward = Reward() if kwargs.get('reward', {}) is None else Reward(**kwargs.get('reward', {}))
 
     def __str__(self) -> str:
         return toString(self)
@@ -310,10 +310,10 @@ class Reward:
     def __init__(self, **kwargs:dict) -> None:
         self.id:str = kwargs.get('id')
         self.thumbnail_url:str = kwargs.get('thumbnail_url')
-        self.point:Point = Point(**kwargs.get('point', {}))
+        self.point:Point = Point() if kwargs.get('point', {}) is None else Point(**kwargs.get('point', {}))
         self.begins_at:str = kwargs.get('begins_at')
         self.ends_at:str = kwargs.get('ends_at')
-        self.reward_status:Reward_Status = Reward_Status(**kwargs.get('reward_status', {}))
+        self.reward_status:Reward_Status = Reward_Status() if kwargs.get('reward_status', {}) is None else (**kwargs.get('reward_status', {}))
 
     def __str__(self) -> str:
         return toString(self)

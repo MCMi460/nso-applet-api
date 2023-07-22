@@ -313,7 +313,7 @@ class Reward:
         self.point:Point = Point() if kwargs.get('point', {}) is None else Point(**kwargs.get('point', {}))
         self.begins_at:str = kwargs.get('begins_at')
         self.ends_at:str = kwargs.get('ends_at')
-        self.reward_status:Reward_Status = Reward_Status() if kwargs.get('reward_status', {}) is None else (**kwargs.get('reward_status', {}))
+        self.reward_status:Reward_Status = Reward_Status() if kwargs.get('reward_status', {}) is None else Reward_Status(**kwargs.get('reward_status', {}))
 
     def __str__(self) -> str:
         return toString(self)

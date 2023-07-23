@@ -1,10 +1,17 @@
 # Made by Deltaion Lee (MCMi460) on Github
 from . import *
 
+###################
+# Data Structures #
+###################
+class Data:
+    def __str__(self) -> str:
+        return toString(self)
+
 ##############################
 # NSOAppletAPI.getUserInfo() #
 ##############################
-class User_Info:
+class User_Info(Data):
     """
     response : dict
         Keys:
@@ -23,13 +30,10 @@ class User_Info:
         self.analytics_opted_in:bool = kwargs.get('analytics_opted_in')
         self.is_region_quebec:bool = kwargs.get('is_region_quebec')
 
-    def __str__(self) -> str:
-        return toString(self)
-
 ###############################
 # NSOAppletAPI.getV1Cookies() #
 ###############################
-class Cookie:
+class Cookie(Data):
     """
     response : dict
         Keys:
@@ -38,13 +42,10 @@ class Cookie:
     def __init__(self, **kwargs:dict) -> None:
         self.expires:int = kwargs.get('expires')
 
-    def __str__(self) -> str:
-        return toString(self)
-
 ##############################
 # NSOAppletAPI.v1PostLogin() #
 ##############################
-class Login:
+class Login(Data):
     """
     response : dict
         Keys:
@@ -56,10 +57,7 @@ class Login:
         self.received_points:list = kwargs.get('received_points')
         self.point_wallet:Point_Wallet = Point_Wallet() if kwargs.get('point_wallet', {}) is None else Point_Wallet(**kwargs.get('point_wallet', {}))
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Point_Wallet:
+class Point_Wallet(Data):
     """
     point_wallet : dict
         Keys:
@@ -71,10 +69,7 @@ class Point_Wallet:
         self.total_point:Total_Point = Total_Point() if kwargs.get('total_point', {}) is None else Total_Point(**kwargs.get('total_point', {}))
         self.expirations:typing.List[Expiration] = [ Expiration(**iterable) for iterable in kwargs.get('expirations', []) ]
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Total_Point:
+class Total_Point(Data):
     """
     total_point : dict
         Keys:
@@ -83,10 +78,7 @@ class Total_Point:
     def __init__(self, **kwargs:dict) -> None:
         self.platinum:int = kwargs.get('platinum')
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Expiration:
+class Expiration(Data):
     """
     iterable : dict
         Keys:
@@ -97,10 +89,7 @@ class Expiration:
         self.expires_at:str = kwargs.get('expires_at')
         self.point:Point = Point() if kwargs.get('point', {}) is None else Point(**kwargs.get('point', {}))
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Point:
+class Point(Data):
     """
     point : dict
         Keys:
@@ -109,13 +98,10 @@ class Point:
     def __init__(self, **kwargs:dict) -> None:
         self.platinum:int = kwargs.get('platinum')
 
-    def __str__(self) -> str:
-        return toString(self)
-
 #######################################
 # NSOAppletAPI.getV1LClassicsTitles() #
 #######################################
-class Classic_Game:
+class Classic_Game(Data):
     """
     iterable : dict
         Keys:
@@ -144,10 +130,7 @@ class Classic_Game:
         self.released_at:str = kwargs.get('released_at')
         self.published_at:str = kwargs.get('published_at')
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Bundled_Region:
+class Bundled_Region(Data):
     """
     bundled_region : dict
         Keys:
@@ -161,7 +144,7 @@ class Bundled_Region:
 ######################################
 # NSOAppletAPI.getV1GiftCategories() #
 ######################################
-class Gift_Category:
+class Gift_Category(Data):
     """
     iterable : dict
         Keys:
@@ -192,10 +175,7 @@ class Gift_Category:
         self.rating_info:Rating_Info = Rating_Info() if kwargs.get('rating_info', {}) is None else Rating_Info(**kwargs.get('rating_info', {}))
         self.gifts:typing.List[Gift] = [ Gift(**iterable) for iterable in kwargs.get('gifts', []) ]
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Rating_Info:
+class Rating_Info(Data):
     """
     rating_info : dict
         Keys:
@@ -211,10 +191,7 @@ class Rating_Info:
         self.rating:Rating = Rating() if kwargs.get('rating', {}) is None else Rating(**kwargs.get('rating', {}))
         self.content_descriptors:typing.List[Content_Descriptor] = [ Content_Descriptor(**iterable) for iterable in kwargs.get('content_descriptors', []) ]
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Rating_System:
+class Rating_System(Data):
     """
     rating_system : dict
         Keys:
@@ -225,10 +202,7 @@ class Rating_System:
         self.id:int = kwargs.get('id')
         self.name:str = kwargs.get('name')
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Rating:
+class Rating(Data):
     """
     rating : dict
         Keys:
@@ -245,10 +219,7 @@ class Rating:
         self.provisional:bool = kwargs.get('provisional')
         self.image_url:str = kwargs.get('image_url')
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Content_Descriptor:
+class Content_Descriptor(Data):
     """
     iterable : dict
         Keys:
@@ -263,10 +234,7 @@ class Content_Descriptor:
         self.type:str = kwargs.get('type')
         self.image_url:str = kwargs.get('image_url')
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Gift:
+class Gift(Data):
     """
     iterable : dict
         Keys:
@@ -293,10 +261,7 @@ class Gift:
         self.updated_at:str = kwargs.get('updated_at')
         self.reward:Reward = Reward() if kwargs.get('reward', {}) is None else Reward(**kwargs.get('reward', {}))
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Reward:
+class Reward(Data):
     """
     reward : dict
         Keys:
@@ -315,10 +280,7 @@ class Reward:
         self.ends_at:str = kwargs.get('ends_at')
         self.reward_status:Reward_Status = Reward_Status() if kwargs.get('reward_status', {}) is None else Reward_Status(**kwargs.get('reward_status', {}))
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Reward_Status:
+class Reward_Status(Data):
     """
     reward_status : dict
         Keys:
@@ -329,13 +291,10 @@ class Reward_Status:
         self.user_id:str = kwargs.get('user_id')
         self.limited:bool = kwargs.get('limited')
 
-    def __str__(self) -> str:
-        return toString(self)
-
 ###################################
 # NSOAppletAPI.getV2PickupItems() #
 ###################################
-class Pickup_Item:
+class Pickup_Item(Data):
     """
     response : dict
         Keys:
@@ -368,10 +327,7 @@ class Pickup_Item:
         self.distribution:Distribution = Distribution() if kwargs.get('distribution', {}) is None else Distribution(**kwargs.get('distribution', {}))
         self.rating_info:Rating_Info = Rating_Info() if kwargs.get('rating_info', {}) is None else Rating_Info(**kwargs.get('rating_info', {}))
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Product:
+class Product(Data):
     """
     iterable : dict
         Keys:
@@ -393,10 +349,7 @@ class Product:
         self.classic_title_id:str = kwargs.get('classic_title_id')
         self.classic_title_icon_url:str = kwargs.get('classic_title_icon_url')
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Distribution:
+class Distribution(Data):
     """
     iterable : dict
         Keys:
@@ -415,10 +368,7 @@ class Distribution:
         self.button:Button = Button() if kwargs.get('button', {}) is None else Button(**kwargs.get('button', {}))
         self.content:str = kwargs.get('content')
 
-    def __str__(self) -> str:
-        return toString(self)
-
-class Button:
+class Button(Data):
     """
     iterable : dict
         Keys:
@@ -428,6 +378,3 @@ class Button:
     def __init__(self, **kwargs:dict) -> None:
         self.text:str = kwargs.get('text')
         self.url:str = kwargs.get('url')
-
-    def __str__(self) -> str:
-        return toString(self)

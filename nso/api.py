@@ -195,8 +195,8 @@ class NSOAppletAPI:
         """
         Unfinished
         """
-        return self._get('/api/v2/pickup_items',
+        return [ Pickup_Item(**iterable) for iterable in self._get('/api/v2/pickup_items',
             query = {
                 'country': country,
             }
-        ).json()
+        ).json() ]

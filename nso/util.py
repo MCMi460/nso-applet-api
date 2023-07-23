@@ -19,6 +19,6 @@ def toString(self, indent:int = 0) -> str:
             if hasattr(value, '__dict__'):
                 value = '\n' + toString(value, indent + 1)
             if isinstance(value, list):
-                value = '[\n' + ',\n\n'.join( (toString(object, indent + 1) if hasattr(object, '__dict__') else (('    ' * (indent + 1)) + object)) for object in value ) + '\n' + ('    ' * indent) + ']'
+                value = '[\n' + ',\n\n'.join( (toString(object, indent + 1) if hasattr(object, '__dict__') else (('    ' * (indent + 1)) + str(object))) for object in value ) + '\n' + ('    ' * indent) + ']'
             ret.append((key, value))
     return ('    ' * indent) + 'Object: ' + type(self).__name__ + '\n' + '\n'.join([ ('    ' * indent) + '%s: %s' % (key, value) for key, value in ret ])

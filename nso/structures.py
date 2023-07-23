@@ -331,3 +331,103 @@ class Reward_Status:
 
     def __str__(self) -> str:
         return toString(self)
+
+###################################
+# NSOAppletAPI.getV2PickupItems() #
+###################################
+class Pickup_Item:
+    """
+    response : dict
+        Keys:
+            id : str
+            status : str
+            countries : list
+                str
+            condition_subscription_type : None || str
+            priority : str
+            template : str
+            products : list
+                product
+            published_at : str
+            expired_at : str
+            display_meta : str
+            distribution : Distribution
+            rating_info : Rating_Info
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.id:str = kwargs.get('id')
+        self.status:str = kwargs.get('status')
+        self.countries:typing.List[str] = kwargs.get('countries')
+        self.condition_subscription_type:str = kwargs.get('condition_subscription_type')
+        self.priority:str = kwargs.get('priority')
+        self.template:str = kwargs.get('template')
+        self.products:typing.List[Product] = [ Product(**iterable) for iterable in kwargs.get('products', []) ]
+        self.published_at:str = kwargs.get('published_at')
+        self.expired_at:str = kwargs.get('expired_at')
+        self.display_meta:str = kwargs.get('display_meta')
+        self.distribution:Distribution = Distribution() if kwargs.get('distribution', {}) is None else Distribution(**kwargs.get('distribution', {}))
+        self.rating_info:Rating_Info = Rating_Info() if kwargs.get('rating_info', {}) is None else Rating_Info(**kwargs.get('rating_info', {}))
+
+    def __str__(self) -> str:
+        return toString(self)
+
+class Product:
+    """
+    iterable : dict
+        Keys:
+            nsuid : int
+            application_id : str
+            title_name : str
+            icon_url : str
+            icon_sizes : list
+                int
+            classic_title_id : None || str
+            classic_title_icon_url : None || str
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.nsuid:int = kwargs.get('nsuid')
+        self.application_id:str = kwargs.get('application_id')
+        self.title_name:str = kwargs.get('title_name')
+        self.icon_url:str = kwargs.get('icon_url')
+        self.icon_sizes:typing.List[int] = kwargs.get('icon_sizes')
+        self.classic_title_id:str = kwargs.get('classic_title_id')
+        self.classic_title_icon_url:str = kwargs.get('classic_title_icon_url')
+
+    def __str__(self) -> str:
+        return toString(self)
+
+class Distribution:
+    """
+    iterable : dict
+        Keys:
+            language : str
+            thumbnail_url : str
+            cover_image_url : str
+            cover_video_url : str
+            button : Button
+            content : None || str
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.language:str = kwargs.get('language')
+        self.thumbnail_url:str = kwargs.get('thumbnail_url')
+        self.cover_image_url:str = kwargs.get('cover_image_url')
+        self.cover_video_url:str = kwargs.get('cover_video_url')
+        self.button:Button = Button() if kwargs.get('button', {}) is None else Button(**kwargs.get('button', {}))
+        self.content:str = kwargs.get('content')
+
+    def __str__(self) -> str:
+        return toString(self)
+
+class Button:
+    """
+    iterable : dict
+        Keys:
+            text : str
+            url : str
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.text:str = kwargs.get('text')
+        self.url:str = kwargs.get('url')
+
+    def __str__(self) -> str:
+        return toString(self)

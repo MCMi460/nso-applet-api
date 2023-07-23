@@ -7,7 +7,7 @@ long_description = (directory / 'README.md').read_text()
 
 setuptools.setup(
 	name = 'nso-applet-api',
-	version = '0.0.22',
+	version = '0.0.23',
 	description = 'Nintendo NSO Applet API',
 	long_description = long_description,
 	long_description_content_type = 'text/markdown',

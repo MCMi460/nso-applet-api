@@ -337,7 +337,7 @@ An object with the following:
 | --- | --- | --- |
 | id | str | UUID of Right |
 | user_id | str | Your Nintendo Account ID |
-| tags | list<str> | Type of gift. One of [`Right_Category.supported_tags`](#right_category) |
+| tags | list<str> | Type of right. One of [`Right_Category.supported_tags`](#right_category) |
 | content_url | str | Same as `thumbnail_url` in [`Reward`](#reward) |
 | created_at | str | Right creation date |
 | updated_at | str | Right update date |

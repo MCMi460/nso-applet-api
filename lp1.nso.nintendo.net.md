@@ -8,8 +8,9 @@ All requests are made with HTTP2.
 | [NSOAppletAPI.getUserInfo()](#getuserinfo) | [/api/v1/user/profile](https://lp1.nso.nintendo.net/api/v1/user/profile) | **GET** |
 | [NSOAppletAPI.getV1Cookies()](#getv1cookies) | [/api/v1/cookies](https://lp1.nso.nintendo.net/api/v1/cookies) | **GET** |
 | [NSOAppletAPI.v1PostLogin()](#v1postlogin) | [/api/v1/login](https://lp1.nso.nintendo.net/api/v1/login) | **POST** |
-| [NSOAppletAPI.getV1LClassicsTitles()](#getv1lclassicstitles) | [/api/v1/classic_games](https://lp1.nso.nintendo.net/api/v1/classic_games) | **GET** |
+| ~~[NSOAppletAPI.getV1LClassicsTitles()](#getv1lclassicstitles)~~ | ~~[/api/v1/classic_games](https://lp1.nso.nintendo.net/api/v1/classic_games)~~ | ~~**GET**~~ |
 | [NSOAppletAPI.getV1GiftCategories()](#getv1giftcategories) | [/api/v1/gift_categories](https://lp1.nso.nintendo.net/api/v1/gift_categories) | **GET** |
+| [NSOAppletAPI.getV1UserRightCategories()](#getv1userrightcategories) | [/api/v1/user/right_categories](https://lp1.nso.nintendo.net/api/v1/user/right_categories) | **GET** |
 
 ## getUserInfo
 Grabs your account's basic user information. Not a full response of data; just what appears to be necessary for the NSO Applet's purposes.
@@ -57,7 +58,8 @@ Posts a login and receives a [Login](#login) object with point-related data.
 | --- | --- |
 | [Login](#login) | an object that contains your [Point_Wallet](#point_wallet) |
 
-## getV1LClassicsTitles
+## ~~getV1LClassicsTitles~~
+**This route appears to have been removed in favor of `/api/v2/classic_games`**  
 Gets the current titles available under NSO's emulation softwares.
 
 ### Request
@@ -88,6 +90,21 @@ Returns the current [Gift Categories](#gift_category) that are available.
 | --- | --- |
 | list<[Gift_Category](#gift_category)> | a list of objects containing gift category information |
 
+## getV1UserRightCategories
+Returns the user's available [Right Categories](#right_category).
+
+### Request
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| country | str | the account's country code |
+
+### Response
+
+| Type | Description |
+| --- | --- |
+| list<[Right_Category](#right_category)> | a list of objects containing right category information |
+
 # Objects
 
 | Name | Origin |
@@ -109,6 +126,8 @@ Returns the current [Gift Categories](#gift_category) that are available.
 | [Gift](#gift) | [nso](/nso/structures.py) |
 | [Reward](#reward) | [nso](/nso/structures.py) |
 | [Reward_Status](#reward_status) | [nso](/nso/structures.py) |
+| [Right_Category](#right_category) | [nso](/nso/structures.py) |
+| [Right](#right) | [nso](/nso/structures.py) |
 
 ## User_Info
 
@@ -296,6 +315,33 @@ An object with the following:
 | --- | --- | --- |
 | user_id | str | The accessor's user ID |
 | limited | bool | If the item is limited(?) |
+
+## Right_Category
+
+An object with the following:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | str | The category ID |
+| key | str | The category's key |
+| name | str | The category's name |
+| image_url | str | The category's image icon URL |
+| supported_tags | list<str> | The supported tags by the category (`['character', 'background', 'frame']`) |
+| rights | list<[Right](#right)> | The rights obtainable from this category |
+
+## Right
+
+An object with the following:
+
+| Name | Type | Description |
+| --- | --- | --- |
+| id | str | UUID of Right |
+| user_id | str | Your Nintendo Account ID |
+| tags | list<str> | Type of gift. One of [`Right_Category.supported_tags`](#right_category) |
+| content_url | str | Same as `thumbnail_url` in [`Reward`](#reward) |
+| created_at | str | Right creation date |
+| updated_at | str | Right update date |
+| gift | [Gift](#gift) | Gift object (gift.reward will always be empty) |
 
 # Testing the NSO Webapplet with dev tools
 

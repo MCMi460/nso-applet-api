@@ -7,6 +7,9 @@ from . import *
 class Data:
     def __str__(self) -> str:
         return toString(self)
+    
+    def fixNone(self, type, name:str, kwargs:dict):
+        return type() if kwargs.get(name, {}) is None else type(**kwargs.get(name, {}))
 
 ##############################
 # NSOAppletAPI.getUserInfo() #
@@ -55,7 +58,7 @@ class Login(Data):
     """
     def __init__(self, **kwargs:dict) -> None:
         self.received_points:list = kwargs.get('received_points')
-        self.point_wallet:Point_Wallet = Point_Wallet() if kwargs.get('point_wallet', {}) is None else Point_Wallet(**kwargs.get('point_wallet', {}))
+        self.point_wallet:Point_Wallet = self.fixNone(Point_Wallet, 'point_wallet', kwargs)
 
 class Point_Wallet(Data):
     """
@@ -66,7 +69,7 @@ class Point_Wallet(Data):
                 Expiration
     """
     def __init__(self, **kwargs:dict) -> None:
-        self.total_point:Total_Point = Total_Point() if kwargs.get('total_point', {}) is None else Total_Point(**kwargs.get('total_point', {}))
+        self.total_point:Total_Point = self.fixNone(Total_Point, 'total_point', kwargs)
         self.expirations:typing.List[Expiration] = [ Expiration(**iterable) for iterable in kwargs.get('expirations', []) ]
 
 class Total_Point(Data):
@@ -87,7 +90,7 @@ class Expiration(Data):
     """
     def __init__(self, **kwargs:dict) -> None:
         self.expires_at:str = kwargs.get('expires_at')
-        self.point:Point = Point() if kwargs.get('point', {}) is None else Point(**kwargs.get('point', {}))
+        self.point:Point = self.fixNone(Point, 'point', kwargs)
 
 class Point(Data):
     """
@@ -172,7 +175,7 @@ class Gift_Category(Data):
         self.required_membership_type:str = kwargs.get('required_membership_type')
         self.supported_tags:typing.List[str] = kwargs.get('supported_tags')
         self.key_color:str = kwargs.get('key_color')
-        self.rating_info:Rating_Info = Rating_Info() if kwargs.get('rating_info', {}) is None else Rating_Info(**kwargs.get('rating_info', {}))
+        self.rating_info:Rating_Info = self.fixNone(Rating_Info, 'rating_info', kwargs)
         self.gifts:typing.List[Gift] = [ Gift(**iterable) for iterable in kwargs.get('gifts', []) ]
 
 class Rating_Info(Data):
@@ -187,8 +190,8 @@ class Rating_Info(Data):
     """
     def __init__(self, **kwargs:dict) -> None:
         self.nsuid:int = kwargs.get('nsuid')
-        self.rating_system:Rating_System = Rating_System() if kwargs.get('rating_system', {}) is None else Rating_System(**kwargs.get('rating_system', {}))
-        self.rating:Rating = Rating() if kwargs.get('rating', {}) is None else Rating(**kwargs.get('rating', {}))
+        self.rating_system:Rating_System = self.fixNone(Rating_System, 'rating_system', kwargs)
+        self.rating:Rating = self.fixNone(Rating, 'rating', kwargs)
         self.content_descriptors:typing.List[Content_Descriptor] = [ Content_Descriptor(**iterable) for iterable in kwargs.get('content_descriptors', []) ]
 
 class Rating_System(Data):
@@ -259,7 +262,7 @@ class Gift(Data):
         self.meta:str = kwargs.get('meta')
         self.created_at:str = kwargs.get('created_at')
         self.updated_at:str = kwargs.get('updated_at')
-        self.reward:Reward = Reward() if kwargs.get('reward', {}) is None else Reward(**kwargs.get('reward', {}))
+        self.reward:Reward = self.fixNone(Reward, 'reward', kwargs)
 
 class Reward(Data):
     """
@@ -278,7 +281,7 @@ class Reward(Data):
         self.point:Point = Point() if kwargs.get('point', {}) is None else Point(**kwargs.get('point', {}))
         self.begins_at:str = kwargs.get('begins_at')
         self.ends_at:str = kwargs.get('ends_at')
-        self.reward_status:Reward_Status = Reward_Status() if kwargs.get('reward_status', {}) is None else Reward_Status(**kwargs.get('reward_status', {}))
+        self.reward_status:Reward_Status = self.fixNone(Reward_Status, 'reward_status', kwargs)
 
 class Reward_Status(Data):
     """
@@ -324,8 +327,8 @@ class Pickup_Item(Data):
         self.published_at:str = kwargs.get('published_at')
         self.expired_at:str = kwargs.get('expired_at')
         self.display_meta:str = kwargs.get('display_meta')
-        self.distribution:Distribution = Distribution() if kwargs.get('distribution', {}) is None else Distribution(**kwargs.get('distribution', {}))
-        self.rating_info:Rating_Info = Rating_Info() if kwargs.get('rating_info', {}) is None else Rating_Info(**kwargs.get('rating_info', {}))
+        self.distribution:Distribution = self.fixNone(Distribution, 'distribution', kwargs)
+        self.rating_info:Rating_Info = self.fixNone(Rating_Info, 'rating_info', kwargs)
 
 class Product(Data):
     """
@@ -365,7 +368,7 @@ class Distribution(Data):
         self.thumbnail_url:str = kwargs.get('thumbnail_url')
         self.cover_image_url:str = kwargs.get('cover_image_url')
         self.cover_video_url:str = kwargs.get('cover_video_url')
-        self.button:Button = Button() if kwargs.get('button', {}) is None else Button(**kwargs.get('button', {}))
+        self.button:Button = self.fixNone(Button, 'button', kwargs)
         self.content:str = kwargs.get('content')
 
 class Button(Data):
@@ -378,3 +381,94 @@ class Button(Data):
     def __init__(self, **kwargs:dict) -> None:
         self.text:str = kwargs.get('text')
         self.url:str = kwargs.get('url')
+
+#################################
+# NSOAppletAPI.getV1UserRightCategories() #
+#################################
+class Right_Category(Data):
+    """
+    iterable : dict
+        Keys:
+            id : str
+            key : str
+            name : str
+            image_url : str
+            supported_tags : list
+                str
+                # 'character'/'background'/'frame'
+            rights : list
+                Right
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.id:str = kwargs.get('id')
+        self.key:str = kwargs.get('key')
+        self.name:str = kwargs.get('name')
+        self.image_url:str = kwargs.get('image_url')
+        self.supported_tags:typing.List[str] = kwargs.get('supported_tags')
+        self.rights:typing.List[Right] = [ Right(**iterable) for iterable in kwargs.get('rights', []) ]
+
+class Right(Data):
+    """
+    iterable : dict
+        Keys:
+            id : str
+            user_id : str
+            content_url : str
+            created_at : str
+            updated_at : str
+            gift : Gift # gift.reward will always be empty
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.id:str = kwargs.get('id')
+        self.user_id:str = kwargs.get('user_id')
+        self.content_url:str = kwargs.get('content_url')
+        self.created_at:str = kwargs.get('created_at')
+        self.updated_at:str = kwargs.get('updated_at')
+        self.gift:Gift = self.fixNone(Gift, 'gift', kwargs)
+
+#################################
+# NSOAppletAPI.getV1UserIcons() #
+#     UNFINISHED CURRENTLY      #
+#################################
+class User_Icon(Data):
+    """
+    iterable : dict
+        Keys:
+            id : str
+            updated_at : str
+            character : Character
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.id:str = kwargs.get('id')
+        self.updated_at:str = kwargs.get('updated_at')
+        self.character:Character = self.fixNone(Character, 'character', kwargs)
+
+class Character(Data):
+    """
+    iterable : dict
+        Keys:
+            shadow : str
+            image_right : Image_Right
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.shadow:str = kwargs.get('shadow')
+        self.image_right:Image_Right = self.fixNone(Image_Right, 'image_right', kwargs)
+
+class Image_Right(Data):
+    """
+    iterable : dict
+        Keys:
+            id : str
+            user_id : str
+            content_url : str
+            created_at : str
+            updated_at : str
+            gift : Gift
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.id:str = kwargs.get('id')
+        self.user_id:str = kwargs.get('user_id')
+        self.content_url:str = kwargs.get('content_url')
+        self.created_at:str = kwargs.get('created_at')
+        self.updated_at:str = kwargs.get('updated_at')
+        self.gift:Gift = self.fixNone(Gift, 'gift', kwargs)

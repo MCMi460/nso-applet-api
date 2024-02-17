@@ -148,29 +148,6 @@ class NSOAppletAPI:
             }
         ).json())
 
-    def getV1LClassicsTitles(self, statuses:str, country:str) -> list:
-        """GET - Gets the current titles available under NSO's emulation softwares
-
-        Parameters
-        ----------
-        statuses : str
-        correlates to statuses[] - commonly is 'published'
-        country : str
-        the account's country code
-
-        Returns
-        -------
-        list
-            Classic_Game
-        a list of objects containing all NSO games available under NSO's emulation softwares
-        """
-        return [ Classic_Game(**iterable) for iterable in self._get('/api/v1/classic_games',
-            query = {
-                'statuses[]': statuses,
-                'country': country,
-            }
-        ).json() ]
-
     def getV1GiftCategories(self, country:str) -> list:
         """GET - Gets the current icon rewards available
 
@@ -190,13 +167,64 @@ class NSOAppletAPI:
                 'country': country,
             }
         ).json() ]
+    
+    def getV1UserRightCategories(self, country:str) -> list:
+        """GET - Gets the user's icons claimed
+
+        Parameters
+        ----------
+        country : str
+        the account's country code
+
+        Returns
+        -------
+        list
+            Right_Category
+        a list of Right_Category objects
+        """
+        return [ Right_Category(**iterable) for iterable in self._get('/api/v1/user/right_categories',
+            query = {
+                'country': country,
+            }
+        ).json() ]
 
     def getV2PickupItems(self, country:str) -> dict:
-        """
-        Unfinished
+        """GET - Gets the current items (news, usually) available
+
+        Parameters
+        ----------
+        country : str
+        the account's country code
+
+        Returns
+        -------
+        list
+            Pickup_Item
+        a list of Pickup_Item objects
         """
         return [ Pickup_Item(**iterable) for iterable in self._get('/api/v2/pickup_items',
             query = {
                 'country': country,
             }
         ).json() ]
+
+    ### Unfinished ###
+    #def getV1UserIcons(self, country:str) -> dict:
+        #"""GET - Gets the user's icon library
+        #
+        #Parameters
+        #----------
+        #country : str
+        #the account's country code
+        #
+        #Returns
+        #-------
+        #list
+        #    User_Icon
+        #a list of User_Icon objects
+        #"""
+        #return [ User_Icon(**iterable) for iterable in self._get('/api/v1/user_icons',
+        #    query = {
+        #        'country': country,
+        #    }
+        #).json() ]

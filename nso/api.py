@@ -189,7 +189,7 @@ class NSOAppletAPI:
             }
         ).json() ]
 
-    def getV2PickupItems(self, country:str) -> dict:
+    def getV2PickupItems(self, country:str) -> list:
         """GET - Gets the current items (news, usually) available
 
         Parameters
@@ -204,6 +204,26 @@ class NSOAppletAPI:
         a list of Pickup_Item objects
         """
         return [ Pickup_Item(**iterable) for iterable in self._get('/api/v2/pickup_items',
+            query = {
+                'country': country,
+            }
+        ).json() ]
+
+    def getV1GiftDistributions(self, country:str) -> list:
+        """GET - Gets the current gift distributions available
+
+        Parameters
+        ----------
+        country : str
+        the account's country code
+
+        Returns
+        -------
+        list
+            Gift_Distribution
+        a list of Gift_Distribution objects
+        """
+        return [ Gift_Distribution(**iterable) for iterable in self._get('/api/v1/gift_distributions',
             query = {
                 'country': country,
             }

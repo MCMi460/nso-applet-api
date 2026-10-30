@@ -144,6 +144,32 @@ class Bundled_Region(Data):
         self.region:str = kwargs.get('region')
         self.languages:list = kwargs.get('languages')
 
+#########################################
+# NSOAppletAPI.getV1GiftDistributions() #
+#########################################
+class Gift_Distribution(Data):
+    """
+    iterable : dict
+        Keys:
+            key : str
+            type : str
+            title : str
+            description : str
+            thumbnail_url : str
+            notifiable_category_ids : list
+                str
+            categories : list
+                Gift_Category
+    """
+    def __init__(self, **kwargs:dict) -> None:
+        self.key:str = kwargs.get('key')
+        self.type:str = kwargs.get('type')
+        self.title:str = kwargs.get('title')
+        self.description:str = kwargs.get('description')
+        self.thumbnail_url:str = kwargs.get('thumbnail_url')
+        self.notifiable_category_ids:typing.List[str] = kwargs.get('notifiable_category_ids')
+        self.categories:typing.List[Gift_Category] = [ Gift_Category(**iterable) for iterable in kwargs.get('categories', []) ]
+
 ######################################
 # NSOAppletAPI.getV1GiftCategories() #
 ######################################

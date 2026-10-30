@@ -356,7 +356,7 @@ An object with the following:
 
   Go to <https://lp1.nso.nintendo.net> -- set your user agent to something like `Mozilla/5.0 (Nintendo Switch; NsoApplet; Nintendo Switch) AppleWebKit/609.4 (KHTML, like Gecko) NF/6.0.2.22.5 NintendoBrowser/5.1.0.23519`
 
-  Add breakpoints to the index's script at `var n = navigator.userAgent.includes("NintendoBrowser");` and the static/js/main.1d72eb58.js at `setNaAuthTokenAvailableCallback: function(e) {e(void 0, void 0, EP.b)},`
+  Add breakpoints to the index's script at `var isNintendoBrowser = navigator.userAgent.includes('NintendoBrowser');` and the _next/static/chunks/pages/_app-59cf9295f083551c.js at the line after `let s = "dummy_token"`
 
   Reload page and, on first breakpoint, paste the below
   ```
@@ -364,7 +364,7 @@ An object with the following:
   ```
   Then resume and on second breakpoint, paste the below, replacing "id_token" with your id_token from before
   ```
-  e(undefined, undefined, 'id_token')
+  s="id_token"
   ```
 
   If you'd like a bunch of info dump, make a breakpoint anywhere with `r.getState()`, then run `r.getState();` in the Console whenever it breaks there.
